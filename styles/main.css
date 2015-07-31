@@ -1,0 +1,36 @@
+body {
+    font-family: Verdana, sans-serif;
+    color: #666666;
+    letter-spacing: 0.8px;
+    margin: 10px;
+    padding: 10px;
+}
+
+h2 {
+    margin-top: 0px;
+    color: #F07C17;
+    font-weight: bold;
+    font-size: 24px;
+}
+
+.active {
+    color: white;
+    background-color: blue;
+}
+
+.mouseOver {
+    color: white;
+    background-color: green;
+    border: 1px solid blue;
+    padding-left: 3px;
+    padding-right: 3px;
+    padding-bottom: 3px;
+    padding-top: 3px;
+}
+
+.chapter {
+    padding-left: 3px;
+    padding-right: 3px;
+    padding-bottom: 3px;
+    padding-top: 3px;
+}
