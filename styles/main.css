@@ -6,6 +6,11 @@ body {
     padding: 10px;
 }
 
+.custom-collapse .collapse {
+    display: block;
+}
+
+
 h2 {
     margin-top: 0px;
     color: #F07C17;

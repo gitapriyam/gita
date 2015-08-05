@@ -22,37 +22,39 @@
         }
     });
 
-    gitaApp.controller('chapterController', ['$scope', function ($scope) {
-	    var self = this;
-	    self.chapter = 0;
-	    self.chapters = ['Dhyanam', 'Chapter 1', 'Chapter 2', 'Chapter 3', 'Chapter 4', 'Chapter 5', 'Chapter 6', 'Chapter 7',
+    gitaApp.controller('chapterController', ['$scope', "chapterService", function ($scope, chapterService) {
+        var self = this;
+        self.chapters = ['Dhyanam', 'Chapter 1', 'Chapter 2', 'Chapter 3', 'Chapter 4', 'Chapter 5', 'Chapter 6', 'Chapter 7',
             'Chapter 8', 'Chapter 9', 'Chapter 10', 'Chapter 11', 'Chapter 12', 'Chapter 13', 'Chapter 14', 'Chapter 15',
             'Chapter 16', 'Chapter 17', 'Chapter 18', 'Mahaatmym'];
 
-	    self.chapterChanged = function (chapter) {
-	        self.chapter = chapter;
-	        $scope.$broadcast('chapterChanged', self.chapter);
-	    };
+        self.chapterChanged = function (chapter) {
+            chapterService.set(chapter);
+            $scope.$broadcast('chapterChanged', chapter);
+        };
 
-	    this.active = function (index) {
-	        return self.chapter === index;
-	    };
+        self.getChapter = function () {
+            return chapterService.get();
+        }
 
-	    self.init = function(){
-	        self.chapterChanged(0);
-	    };
+        this.active = function (index) {
+            return chapterService.get() === index;
+        };
 
-	    self.init();
+        self.init = function () {
+            self.chapterChanged(0);
+        };
 
-	}]);
+        self.init();
 
-    gitaApp.controller('slokaController', ['$scope', '$http', function ($scope, $http) {
+    }]);
+
+    gitaApp.controller('slokaController', ['$scope', '$http', "chapterService", function ($scope, $http, chapterService) {
         var self = this;
         self.slokasArray = [9, 47, 72, 43, 42, 29, 47, 30, 28, 34, 42, 55, 20, 35, 27, 20, 24, 28, 78, 22];
-        self.chapter = 0;
         self.sloka = 1;
         self.requestTypes = ['sanskrit', 'english', 'meaning'];
-        self.numSlokas = self.slokasArray[self.chapter];
+        self.numSlokas = self.slokasArray[chapterService.get()];
         self.sanskrit = "";
         self.english = "";
         self.meaning = "";
@@ -64,14 +66,14 @@
         };
 
         self.getURL = function (type) {
-            var chapName = "chap" + self.getFormattedNumber(self.chapter);
-            return chapName + "/" + type + "_" + self.getFormattedNumber(self.chapter) + "_" + self.getFormattedNumber(self.sloka) + ".txt";
+            var chapName = "chap" + self.getFormattedNumber(chapterService.get());
+            return chapName + "/" + type + "_" + self.getFormattedNumber(chapterService.get()) + "_" + self.getFormattedNumber(self.sloka) + ".txt";
         };
 
         $scope.$on('chapterChanged', function (event, value) {
-            self.chapter = value;
+            chapterService.set(value);
             self.sloka = 1;
-            self.numSlokas = self.slokasArray[self.chapter];
+            self.numSlokas = self.slokasArray[value];
             self.fetchData();
         });
 
@@ -83,17 +85,17 @@
                         $http.get(self.getURL(currentType))
                         .success(function (data) {
                             if (currentType === 'sanskrit') {
-                               self.sanskrit = data;
-                           }
+                                self.sanskrit = data;
+                            }
                             else if (currentType === 'english') {
-                               self.english = data;
-                           }
+                                self.english = data;
+                            }
                             else if (currentType === 'meaning') {
-                               self.meaning = data;
-                           }
+                                self.meaning = data;
+                            }
                         });
                     };
-                })(type), 500);                
+                })(type), 500);
             }
         };
 
@@ -105,22 +107,46 @@
 
         self.incrementSloka = function () {
             var currentSloka = self.sloka;
+            var chapter = chapterService.get();
             if (++currentSloka <= self.numSlokas) {
                 self.sloka = currentSloka;
-                self.fetchData();
             }
+            else {
+                self.sloka = 1;
+                var currentChapter = ++chapter;
+                if (currentChapter > 19) {
+                    currentChapter = 0;
+                }
+                chapterService.set(currentChapter);
+                self.numSlokas = self.slokasArray[currentChapter];
+            }
+            self.fetchData();
         };
 
         self.decrementSloka = function () {
             var currentSloka = self.sloka;
+            var chapter = chapterService.get();
             if (--currentSloka > 0) {
                 self.sloka = currentSloka;
-                self.fetchData();
             }
+            else {
+                var currentChapter = --chapter;
+                if (currentChapter < 0) {
+                    currentChapter = 19;
+                }
+
+                chapterService.set(currentChapter);
+                self.sloka = self.slokasArray[currentChapter];
+                self.numSlokas = self.slokasArray[currentChapter];
+            }
+            self.fetchData();
         };
 
+        self.getChapter = function () {
+            return chapterService.get();
+        }
+
         self.init = function () {
-            self.chapter = 0;
             self.sloka = 1;
             self.numSlokas = self.slokasArray[self.chapter];
             self.fetchData();

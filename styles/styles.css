@@ -1,0 +1,101 @@
+html, body {
+    height: 100%;
+}
+
+body {
+    color: green;
+    font-size: 12px;
+    font-weight: 400;
+    margin: 5px 5px;
+}
+
+h4 {
+    font-size: 16px;
+    /*margin: 0px 0px;*/
+    padding: 5px 5px;
+}
+
+.container {
+    padding-left: 5px;
+    padding-right: 5px;
+    /*width: 100px;*/
+    width: 100%;
+    height: 100%;
+    min-height: 100%;
+}
+
+.headerContainer {
+    padding-left: 5px;
+    padding-right: 5px;
+    background-color: #eef4ed;
+    border: 2px solid #cef6bf;
+    /*height: 10%;*/
+}
+
+.row {
+    margin-left: 5px;
+    margin-right: 5px;
+}
+
+.header {
+    /*margin: 0px 0px;*/
+    padding: 5px 5px;
+    background-color: #eef4ed;
+    width: 100%;
+}
+
+.filterLocation {
+    /*margin: 0px 0px;*/
+    padding: 5px 5px;
+}
+
+.mapContainer {
+    padding: 5px 5px;
+    border: 2px solid #CCC;
+    background-color: #FFF;
+    height: 89%;
+    overflow: hidden;
+}
+
+.sidebar {
+    padding: 5px 5px;
+}
+
+.row-eq-height {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: inline;
+}
+
+.loc-list {
+    padding-right: 5px;
+    padding-left: 5px;
+}
+
+.map-canvas {
+    float: none;
+    height: 100%;
+    overflow: hidden;
+}
+
+.filterField {
+    color: black;
+}
+
+.locs {
+    margin-top: 2px;
+    margin-bottom: 2px;
+}
+
+
+.myButton {
+    margin-left: 0px; 
+    margin-right: 0px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    width: 100%;
+    vertical-align: middle;
+    border-radius: 25px;
+    border-color: #088b08;
+}
