@@ -58,6 +58,7 @@
         self.sanskrit = "";
         self.english = "";
         self.meaning = "";
+        $scope.navbarCollapsed = true;
         self.getFormattedNumber = function (num) {
             if (num < 10) {
                 return "0" + num;

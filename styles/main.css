@@ -18,7 +18,7 @@ h2 {
     font-size: 24px;
 }
 
-.active {
+.currentActive {
     color: white;
     background-color: blue;
 }
@@ -27,10 +27,10 @@ h2 {
     color: white;
     background-color: green;
     border: 1px solid blue;
-    padding-left: 3px;
+    /*padding-left: 3px;
     padding-right: 3px;
     padding-bottom: 3px;
-    padding-top: 3px;
+    padding-top: 3px;*/
 }
 
 .chapter {
@@ -39,3 +39,65 @@ h2 {
     padding-bottom: 3px;
     padding-top: 3px;
 }
+
+#wrapper {
+    padding-left: 0;
+    -webkit-transition: all 0.5s ease;
+    -moz-transition: all 0.5s ease;
+    -o-transition: all 0.5s ease;
+    transition: all 0.5s ease;
+}
+
+    #wrapper.toggled {
+        padding-left: 250px;
+    }
+
+#sidebar-wrapper {
+    /*z-index: 1000;*/
+    /*position: fixed;*/
+    /*left: 250px;*/
+    /*width: 0;*/
+    height: 100%;
+    /*margin-left: -250px;*/
+    overflow-y: auto;
+    /*background: #000;*/
+    -webkit-transition: all 0.5s ease;
+    -moz-transition: all 0.5s ease;
+    -o-transition: all 0.5s ease;
+    transition: all 0.5s ease;
+}
+
+#wrapper.toggled #sidebar-wrapper {
+    width: 250px;
+}
+
+#page-content-wrapper {
+    width: 100%;
+    position: absolute;
+    padding: 15px;
+}
+
+#wrapper.toggled #page-content-wrapper {
+    position: absolute;
+    margin-right: -250px;
+}
+
+/* Sidebar Styles */
+
+.sidebar-nav {
+    /*position: absolute;*/
+    top: 0;
+    /*width: 250px;*/
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+    .sidebar-nav li {
+        text-indent: 20px;
+    }
+
+ 
+
+    
+    

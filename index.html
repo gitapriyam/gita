@@ -16,22 +16,21 @@
     <script src="./scripts/myAngular.js" type="text/javascript"> </script>
 
     <link rel="stylesheet" href="styles/bootstrap.min.css">
-    <link rel="stylesheet" type="text/css" media="screen and (min-device-width: 320px) and (max-device-width: 479px)" href="styles/small-devices.css">
+    <!--<link rel="stylesheet" type="text/css" media="screen and (min-device-width: 320px) and (max-device-width: 479px)" href="styles/small-devices.css">
     <link rel="stylesheet" type="text/css" media="screen and (min-device-width: 480px) and (max-device-width: 767px)" href="styles/mobile.css">
     <link rel="stylesheet" type="text/css" media="screen and (min-device-width: 768px) and (max-device-width: 991px)" href="styles/tablet.css">
-    <link rel="stylesheet" type="text/css" media="screen and (min-device-width: 992px) and (max-device-width: 1199px)" href="styles/finer-tablet.css">
-    <link rel="stylesheet" type="text/css" media="screen and (min-device-width: 1200px)" href="styles/main.css">
-    <!--<link href="styles/main.css" rel="stylesheet">-->
+    <link rel="stylesheet" type="text/css" media="screen and (min-device-width: 992px) and (max-device-width: 1199px)" href="styles/finer-tablet.css">-->
+    <!--<link rel="stylesheet" type="text/css" media="screen and (min-device-width: 1200px)" href="styles/main.css">-->
+    <link href="styles/main.css" rel="stylesheet">
     <script>
-        function collapseList() {
-            if (window.innerWidth < 768) {
-                $('#collapseButton').click();
-            }
-        }
-
+        $(document).ready(function () {
+            $('[data-toggle=offcanvas]').click(function () {
+                $('.row-offcanvas').toggleClass('active');
+            });
+        });
     </script>
     <style>
-        .panel-title a:after {
+        /*.panel-title a:after {
             font-family: 'Glyphicons Halflings';
             content: "\e114";
             float: right;
@@ -40,14 +39,84 @@
 
         .panel-title a.collapsed:after {
             content: "\e080";
+        }*/
+
+        /*body {
+            padding-top: 51px;
+        }*/
+
+        /*.text-center {
+            padding-top: 20px;
+        }*/
+
+        /*.col-xs-12 {
+            background-color: #fff;
+        }*/
+
+        #sidebar {
+            height: 100%;
+            padding-right: 0;
+            padding-top: 20px;
+        }
+
+            #sidebar .nav {
+                width: 95%;
+            }
+
+            #sidebar li {
+                border: 0 #f2f2f2 solid;
+                /*border-bottom-width: 1px;*/
+            }
+
+        /* collapsed sidebar styles */
+        @media screen and (max-width: 767px) {
+            .row-offcanvas {
+                position: relative;
+                -webkit-transition: all 0.25s ease-out;
+                -moz-transition: all 0.25s ease-out;
+                transition: all 0.25s ease-out;
+            }
+
+            .row-offcanvas-left .sidebar-offcanvas {
+                left: -25%;
+            }
+
+            .row-offcanvas-left.active {
+                left: 25%;
+            }
+
+            .sidebar-offcanvas {
+                position: absolute;
+                top: 0;
+                width: 25%;
+            }
+
+            #sidebar {
+                padding-top: 0;
+            }
         }
     </style>
 </head>
 <body ng-app="gitaApp">
     <div class="container-fluid" id="main">
         <div class="row">
+            <div class="navbar navbar-default" role="navigation">
+                <div class="container">
+                    <div class="navbar-header">
+                        <button type="button" class="navbar-toggle" data-toggle="offcanvas" data-target=".sidebar-nav">
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>
+                        <a class="navbar-brand" href="#">Welcome to Gita abhyasa</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
             <div>
-                <h1>Welcome to Gita abhyasa</h1>
+                <!--<h1>Welcome to Gita abhyasa</h1>-->
                 <div class="panel-group" id="accordion8">
                     <div class="panel panel-default">
                         <div class="panel-heading">
@@ -71,60 +140,92 @@
                     </div>
                 </div>
             </div>
-
-            <div class="row" ng-controller="chapterController as chapterctrl">
-                <nav class="navbar navbar-default">
-                    <div class="container-fluid">
-                        <div class="navbar-header">
-                            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
-                                <span class="icon-bar"></span>
-                                <span class="icon-bar"></span>
-                                <span class="icon-bar"></span>
-                            </button>
-                        </div>
-                        <div class="collapse navbar-collapse" id="myNavbar">
-                            <ul class="nav navbar-nav">
-                                <li class="dropdown">
-                                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                                        Chapters
-                                        <span class="caret"></span>
-                                    </a>
-                                    <ul class="dropdown-menu">
-                                        <li ng-repeat='chapter in chapterctrl.chapters' ng-click="chapterctrl.chapterChanged(this.$index);" onclick="collapseList();"
-                                            ng-class="{active:chapterctrl.active(this.$index), mouseOver:hover}" ng-mouseover="hover=true" ng-mouseleave="hover=false">
-                                            {{chapter}}
-                                        </li>
-                                    </ul>
-                                </li>
-                            </ul>
-                            <!--<ul class="nav navbar-nav navbar-right">
-                                <li><a href="#"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
-                                <li><a href="#"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
-                            </ul>-->
-                        </div>
-                    </div>
-                </nav>
-            </div>
-
-            <div class="row" ng-init="$scope.navbarCollapsed=true" ng-controller="slokaController as sloka">
-                <!--<div class="col-sm-2 col-md-2">
-                    <div class="custom-collapse">
-                        <button id="collapseButton" class="collapse-toggle visible-xs" type="button"
-                                data-toggle="collapse" data-parent="custom-collapse" data-target="#chapter-menu-collapse" ng-click="navbarCollapsed = !navbarCollapsed">
-                            <span class="">Chapters</span>
+        </div>
+        <!--<div class="row" ng-controller="chapterController as chapterctrl">
+            <nav class="navbar navbar-default">
+                <div class="container-fluid">
+                    <div class="navbar-header">
+                        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
                         </button>
-                        <ul class="list-group collapse" id="chapter-menu-collapse" collapse="navbarCollapsed">
-                            <li ng-repeat='chapter in chapterctrl.chapters' ng-click="chapterctrl.chapterChanged(this.$index);" onclick="collapseList();"
-                                ng-class="{active:chapterctrl.active(this.$index), mouseOver:hover}" ng-mouseover="hover=true" ng-mouseleave="hover=false">
-                                {{chapter}}
+                    </div>
+                    <div class="collapse navbar-collapse" id="myNavbar">
+                        <ul class="nav navbar-nav">
+                            <li class="dropdown">
+                                <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                                    Chapters
+                                    <span class="caret"></span>
+                                </a>
+                                <ul class="dropdown-menu">
+                                    <li ng-repeat='chapter in chapterctrl.chapters' ng-click="chapterctrl.chapterChanged(this.$index);" onclick="collapseList();"
+                                        ng-class="{active:chapterctrl.active(this.$index), mouseOver:hover}" ng-mouseover="hover=true" ng-mouseleave="hover=false">
+                                        {{chapter}}
+                                    </li>
+                                </ul>
                             </li>
                         </ul>
+                        <ul class="nav navbar-nav navbar-right">
+                            <li><a href="#"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
+                            <li><a href="#"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+                        </ul>
                     </div>
-                </div>-->
-                <div class="col-sm-10 col-md-10 end">
-                    <div class="row">
-                        ss
+                </div>
+            </nav>
+        </div>-->
+        <!--<div class="row" style="padding-bottom:15px;padding-left:15px;">
+            <button type="button" onclick="changeClass();">
+                <span class="glyphicon glyphicon-chevron-left"></span>
+            </button>
+        </div>-->
 
+        <div class="row">
+            <!--<div class="col-sm-2 col-md-2">
+                <div class="custom-collapse">
+                    <button id="collapseButton" class="collapse-toggle visible-xs" type="button"
+                            data-toggle="collapse" data-parent="custom-collapse"
+                            data-target="#chapter-menu-collapse" ng-click="navbarCollapsed = !navbarCollapsed">
+                        <span class="">Chapters</span>
+                    </button>
+                    <ul class="list-group collapse" id="chapter-menu-collapse" collapse="navbarCollapsed">
+                        <li ng-repeat='chapter in chapterctrl.chapters' ng-click="chapterctrl.chapterChanged(this.$index);"
+                            ng-class="{active:chapterctrl.active(this.$index), mouseOver:hover}" ng-mouseover="hover=true" ng-mouseleave="hover=false">
+                            {{chapter}}
+                        </li>
+                    </ul>
+                </div>
+            </div>-->
+            <!--<div id="chapterList" class="col-sm-2 col-md-3 col-lg-2" ng-controller="chapterController as chapterctrl">
+                <div id="sidebar-wrapper">
+                    <ul class="sidebar-nav">
+                        <li ng-repeat='chapter in chapterctrl.chapters' ng-click="chapterctrl.chapterChanged(this.$index);"
+                            ng-class="{active:chapterctrl.active(this.$index), mouseOver:hover}" ng-mouseover="hover=true" ng-mouseleave="hover=false">
+                            {{chapter}}
+                        </li>
+                    </ul>
+                </div>
+            </div>-->
+            <!-- sidebar -->
+
+            <div class="row row-offcanvas row-offcanvas-left" ng-controller="chapterController as chapterctrl">
+                <div class="col-xs-6 sidebar-offcanvas" id="sidebar" role="navigation">
+                    <ul class="nav" id="chapter-menu-collapse" collapse="navbarCollapsed">
+                        <li ng-repeat='chapter in chapterctrl.chapters' ng-click="chapterctrl.chapterChanged(this.$index);"
+                            ng-class="{currentActive:chapterctrl.active(this.$index), mouseOver:hover}" ng-mouseover="hover=true" ng-mouseleave="hover=false">
+                            {{chapter}}
+                        </li>
+                    </ul>
+                    <!--<ul class="nav">
+                        <li class="active"><a href="#">Home</a></li>
+                        <li><a href="#">Link 1</a></li>
+                        <li><a href="#">Link 2</a></li>
+                        <li><a href="#">Link 3</a></li>
+                    </ul>-->
+                </div>
+
+                <div id="slokaList" class="col-xs-12 end" ng-controller="slokaController as sloka">
+                    <div class="row">
                         <table>
                             <tbody>
                                 <tr>
@@ -201,5 +302,6 @@
             </div>
         </div>
     </div>
+
 </body>
 </html>
