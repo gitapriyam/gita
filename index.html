@@ -23,11 +23,11 @@
     <!--<link rel="stylesheet" type="text/css" media="screen and (min-device-width: 1200px)" href="styles/main.css">-->
     <link href="styles/main.css" rel="stylesheet">
     <script>
-        $(document).ready(function () {
-            $('[data-toggle=offcanvas]').click(function () {
-                $('.row-offcanvas').toggleClass('active');
-            });
-        });
+        //$(document).ready(function () {
+        //    $('[data-toggle=offcanvas]').click(function () {
+        //        $('.row-offcanvas').toggleClass('active');
+        //    });
+        //});
     </script>
     <style>
         /*.panel-title a:after {
@@ -77,11 +77,11 @@
                 transition: all 0.25s ease-out;
             }
 
-            .row-offcanvas-left .sidebar-offcanvas {
+            /*.row-offcanvas-left .sidebar-offcanvas {
                 left: -25%;
-            }
+            }*/
 
-            .row-offcanvas-left.active {
+            /*.row-offcanvas-left.active {
                 left: 25%;
             }
 
@@ -93,7 +93,7 @@
 
             #sidebar {
                 padding-top: 0;
-            }
+            }*/
         }
     </style>
 </head>
@@ -102,8 +102,9 @@
         <div class="row">
             <div class="navbar navbar-default" role="navigation">
                 <div class="container">
-                    <div class="navbar-header">
-                        <button type="button" class="navbar-toggle" data-toggle="offcanvas" data-target=".sidebar-nav">
+                    <div class="navbar-header" ng-controller="toggleController as ctrl">
+                        <button type="button" class="navbar-toggle" data-toggle="offcanvas"
+                                data-target=".sidebar-nav" ng-click="ctrl.toggleActive();">
                             <span class="icon-bar"></span>
                             <span class="icon-bar"></span>
                             <span class="icon-bar"></span>
@@ -141,162 +142,93 @@
                 </div>
             </div>
         </div>
-        <!--<div class="row" ng-controller="chapterController as chapterctrl">
-            <nav class="navbar navbar-default">
-                <div class="container-fluid">
-                    <div class="navbar-header">
-                        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
-                            <span class="icon-bar"></span>
-                            <span class="icon-bar"></span>
-                            <span class="icon-bar"></span>
-                        </button>
-                    </div>
-                    <div class="collapse navbar-collapse" id="myNavbar">
-                        <ul class="nav navbar-nav">
-                            <li class="dropdown">
-                                <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                                    Chapters
-                                    <span class="caret"></span>
-                                </a>
-                                <ul class="dropdown-menu">
-                                    <li ng-repeat='chapter in chapterctrl.chapters' ng-click="chapterctrl.chapterChanged(this.$index);" onclick="collapseList();"
-                                        ng-class="{active:chapterctrl.active(this.$index), mouseOver:hover}" ng-mouseover="hover=true" ng-mouseleave="hover=false">
-                                        {{chapter}}
-                                    </li>
-                                </ul>
-                            </li>
-                        </ul>
-                        <ul class="nav navbar-nav navbar-right">
-                            <li><a href="#"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
-                            <li><a href="#"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
-                        </ul>
-                    </div>
-                </div>
-            </nav>
-        </div>-->
-        <!--<div class="row" style="padding-bottom:15px;padding-left:15px;">
-            <button type="button" onclick="changeClass();">
-                <span class="glyphicon glyphicon-chevron-left"></span>
-            </button>
-        </div>-->
-
         <div class="row">
-            <!--<div class="col-sm-2 col-md-2">
-                <div class="custom-collapse">
-                    <button id="collapseButton" class="collapse-toggle visible-xs" type="button"
-                            data-toggle="collapse" data-parent="custom-collapse"
-                            data-target="#chapter-menu-collapse" ng-click="navbarCollapsed = !navbarCollapsed">
-                        <span class="">Chapters</span>
-                    </button>
-                    <ul class="list-group collapse" id="chapter-menu-collapse" collapse="navbarCollapsed">
-                        <li ng-repeat='chapter in chapterctrl.chapters' ng-click="chapterctrl.chapterChanged(this.$index);"
-                            ng-class="{active:chapterctrl.active(this.$index), mouseOver:hover}" ng-mouseover="hover=true" ng-mouseleave="hover=false">
-                            {{chapter}}
-                        </li>
-                    </ul>
-                </div>
-            </div>-->
-            <!--<div id="chapterList" class="col-sm-2 col-md-3 col-lg-2" ng-controller="chapterController as chapterctrl">
-                <div id="sidebar-wrapper">
-                    <ul class="sidebar-nav">
-                        <li ng-repeat='chapter in chapterctrl.chapters' ng-click="chapterctrl.chapterChanged(this.$index);"
-                            ng-class="{active:chapterctrl.active(this.$index), mouseOver:hover}" ng-mouseover="hover=true" ng-mouseleave="hover=false">
-                            {{chapter}}
-                        </li>
-                    </ul>
-                </div>
-            </div>-->
-            <!-- sidebar -->
-
             <div class="row row-offcanvas row-offcanvas-left" ng-controller="chapterController as chapterctrl">
-                <div class="col-xs-6 sidebar-offcanvas" id="sidebar" role="navigation">
-                    <ul class="nav" id="chapter-menu-collapse" collapse="navbarCollapsed">
+                <div ng-if="chapterctrl.isActive()" class="col-xs-3 sidebar-offcanvas" id="sidebar" role="navigation">
+                    <ul class="nav" id="chapter-menu-collapse">
                         <li ng-repeat='chapter in chapterctrl.chapters' ng-click="chapterctrl.chapterChanged(this.$index);"
-                            ng-class="{currentActive:chapterctrl.active(this.$index), mouseOver:hover}" ng-mouseover="hover=true" ng-mouseleave="hover=false">
+                            ng-class="{currentActive:chapterctrl.activeLink(this.$index), mouseOver:hover}"
+                            ng-mouseover="hover=true" ng-mouseleave="hover=false">
                             {{chapter}}
                         </li>
                     </ul>
-                    <!--<ul class="nav">
-                        <li class="active"><a href="#">Home</a></li>
-                        <li><a href="#">Link 1</a></li>
-                        <li><a href="#">Link 2</a></li>
-                        <li><a href="#">Link 3</a></li>
-                    </ul>-->
                 </div>
 
-                <div id="slokaList" class="col-xs-12 end" ng-controller="slokaController as sloka">
-                    <div class="row">
-                        <table>
-                            <tbody>
-                                <tr>
-                                    <td>
-                                        <label>
-                                            <span class="label label-primary">Chapter: {{sloka.getChapter()}}</span>
-                                        </label>
-                                    </td>
-                                    <td>
-                                        <button ng-click="sloka.decrementSloka()" class="btn btn-default" aria-label="Center Align">
-                                            <span class="glyphicon glyphicon-chevron-left"></span>
-                                        </button>
-                                    </td>
+                <div id="slokaList" ng-class="{'col-xs-9': chapterctrl.isActive(), 'col-xs-12': !chapterctrl.isActive()}">
+                    <div class="row" ng-controller="slokaController as sloka">
+                        <div>
+                            <table>
+                                <tbody>
+                                    <tr>
+                                        <td>
+                                            <label>
+                                                <span class="label label-primary">Chapter: {{sloka.getChapter()}}</span>
+                                            </label>
+                                        </td>
+                                        <td>
+                                            <button ng-click="sloka.decrementSloka()" class="btn btn-default" aria-label="Center Align">
+                                                <span class="glyphicon glyphicon-chevron-left"></span>
+                                            </button>
+                                        </td>
 
-                                    <td>
-                                        <label>
-                                            <span class="label label-primary">Sloka: {{sloka.sloka}}</span>
-                                        </label>
-                                    </td>
+                                        <td>
+                                            <label>
+                                                <span class="label label-primary">Sloka: {{sloka.sloka}}</span>
+                                            </label>
+                                        </td>
 
-                                    <td>
-                                        <button ng-click="sloka.incrementSloka()" class="btn btn-default">
-                                            <span class="glyphicon glyphicon-chevron-right"></span>
-                                        </button>
+                                        <td>
+                                            <button ng-click="sloka.incrementSloka()" class="btn btn-default">
+                                                <span class="glyphicon glyphicon-chevron-right"></span>
+                                            </button>
 
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div class="row">
-                        <div class="panel-group" id="accordion">
-                            <div class="panel panel-default">
-                                <div class="panel-heading">
-                                    <h4 class="panel-title">
-                                        <a data-toggle="collapse" data-parent="#accordion1" href="#collapse1">
-                                            Sanskrit
-                                        </a>
-                                    </h4>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="row">
+                            <div class="panel-group" id="accordion">
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">
+                                        <h4 class="panel-title">
+                                            <a data-toggle="collapse" data-parent="#accordion1" href="#collapse1">
+                                                Sanskrit
+                                            </a>
+                                        </h4>
+                                    </div>
+                                    <div id="collapse1" class="panel-collapse collapse in">
+                                        <div id="sanskrit" class="panel-body" ng-bind-html="sloka.sanskrit|sanitize"> </div>
+                                    </div>
                                 </div>
-                                <div id="collapse1" class="panel-collapse collapse in">
-                                    <div id="sanskrit" class="panel-body" ng-bind-html="sloka.sanskrit|sanitize"> </div>
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">
+                                        <h4 class="panel-title">
+                                            <a data-toggle="collapse" data-parent="#accordion2" href="#collapse2">
+                                                English
+                                            </a>
+                                        </h4>
+                                    </div>
+                                    <div id="collapse2" class="panel-collapse collapse">
+                                        <div class="panel-body" ng-bind-html="sloka.english|sanitize"> </div>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="panel panel-default">
-                                <div class="panel-heading">
-                                    <h4 class="panel-title">
-                                        <a data-toggle="collapse" data-parent="#accordion2" href="#collapse2">
-                                            English
-                                        </a>
-                                    </h4>
-                                </div>
-                                <div id="collapse2" class="panel-collapse collapse">
-                                    <div class="panel-body" ng-bind-html="sloka.english|sanitize"> </div>
-                                </div>
-                            </div>
-                            <div class="panel panel-default">
-                                <div class="panel-heading">
-                                    <h4 class="panel-title">
-                                        <a data-toggle="collapse" data-parent="#accordion3" href="#collapse3">
-                                            Meaning
-                                        </a>
-                                    </h4>
-                                </div>
-                                <div id="collapse3" class="panel-collapse collapse">
-                                    <div class="panel-body" ng-bind-html="sloka.meaning|sanitize">
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">
+                                        <h4 class="panel-title">
+                                            <a data-toggle="collapse" data-parent="#accordion3" href="#collapse3">
+                                                Meaning
+                                            </a>
+                                        </h4>
+                                    </div>
+                                    <div id="collapse3" class="panel-collapse collapse">
+                                        <div class="panel-body" ng-bind-html="sloka.meaning|sanitize">
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
 
+                        </div>
                     </div>
                 </div>
             </div>
