@@ -56,7 +56,7 @@
         #sidebar {
             height: 100%;
             padding-right: 0;
-            padding-top: 20px;
+            /*padding-top: 20px;*/
         }
 
             #sidebar .nav {
@@ -143,8 +143,8 @@
             </div>
         </div>
         <div class="row">
-            <div class="row row-offcanvas row-offcanvas-left" ng-controller="chapterController as chapterctrl">
-                <div ng-if="chapterctrl.isActive()" class="col-xs-3 sidebar-offcanvas" id="sidebar" role="navigation">
+            <div class="row-offcanvas" ng-controller="chapterController as chapterctrl">
+                <div ng-if="chapterctrl.isActive()" class="col-xs-2 sidebar-offcanvas" id="sidebar" role="navigation">
                     <ul class="nav" id="chapter-menu-collapse">
                         <li ng-repeat='chapter in chapterctrl.chapters' ng-click="chapterctrl.chapterChanged(this.$index);"
                             ng-class="{currentActive:chapterctrl.activeLink(this.$index), mouseOver:hover}"
@@ -154,17 +154,19 @@
                     </ul>
                 </div>
 
-                <div id="slokaList" ng-class="{'col-xs-9': chapterctrl.isActive(), 'col-xs-12': !chapterctrl.isActive()}">
-                    <div class="row" ng-controller="slokaController as sloka">
+                <div id="slokaList" ng-class="{'col-xs-10': chapterctrl.isActive(), 'col-xs-12': !chapterctrl.isActive()}">
+                    <div ng-controller="slokaController as sloka">
                         <div>
                             <table>
                                 <tbody>
                                     <tr>
+
                                         <td>
                                             <label>
                                                 <span class="label label-primary">Chapter: {{sloka.getChapter()}}</span>
                                             </label>
                                         </td>
+
                                         <td>
                                             <button ng-click="sloka.decrementSloka()" class="btn btn-default" aria-label="Center Align">
                                                 <span class="glyphicon glyphicon-chevron-left"></span>
@@ -173,7 +175,7 @@
 
                                         <td>
                                             <label>
-                                                <span class="label label-primary">Sloka: {{sloka.sloka}}</span>
+                                                <span class="label label-primary">Sloka: {{sloka.getSloka()}}</span>
                                             </label>
                                         </td>
 
@@ -187,7 +189,7 @@
                                 </tbody>
                             </table>
                         </div>
-                        <div class="row">
+                        <div>
                             <div class="panel-group" id="accordion">
                                 <div class="panel panel-default">
                                     <div class="panel-heading">
@@ -226,13 +228,27 @@
                                         </div>
                                     </div>
                                 </div>
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">
+                                        <h4 class="panel-title">
+                                            <a data-toggle="collapse" data-parent="#accordion4" href="#collapse4">
+                                                Audio
+                                            </a>
+                                        </h4>
+                                    </div>
+                                    <div id="collapse4" class="panel-collapse collapse">
+                                        <div class="panel-body">
+                                            Audio Section
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
-
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+    </div>
     </div>
 
 </body>

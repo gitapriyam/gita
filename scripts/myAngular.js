@@ -14,6 +14,10 @@
 
         self.sloka = 1;
 
+        self.slokasArray = [9, 47, 72, 43, 42, 29, 47, 30, 28, 34, 42, 55, 20, 35, 27, 20, 24, 28, 78, 22];
+
+        self.active = true;
+
         self.getFormattedNumber = function (num) {
             if (num < 10) {
                 return "0" + num;
@@ -21,9 +25,15 @@
             return num;
         };
 
+        self.resetSloka = function () {
+            self.sloka = 1;
+        };
+
         return {
             setChapter: function (chap) {
+                self.resetSloka();
                 self.chapter = chap;
+
             },
             getChapter: function () {
                 return self.chapter;
@@ -36,12 +46,23 @@
                 self.sloka = slokaNum;
             },
 
+            getNumberOfSlokas: function () {
+                return self.slokasArray[self.chapter];
+            },
+
             getURL: function (type) {
                 var chapName = "chap" + self.getFormattedNumber(self.chapter);
                 return chapName + "/" + type + "_" + self.getFormattedNumber(self.chapter) +
                     "_" + self.getFormattedNumber(self.sloka) + ".txt";
-            }
+            },
 
+            isActive: function () {
+                return self.active;
+            },
+
+            setActive: function (activeState) {
+                self.active = activeState;
+            }
         }
     });
 
@@ -62,21 +83,21 @@
         }
     });
 
-    gitaApp.controller("toggleController", ['$scope', 'toggleService', function ($scope, toggleService) {
+    gitaApp.controller("toggleController", ['$scope', 'chapterService', function ($scope, chapterService) {
 
         var self = this;
         self.isActive = function () {
-            return toggleService.get();
+            return chapterService.isActive();
         };
 
         self.toggleActive = function () {
-            var active = toggleService.get() ? false : true;
-            toggleService.set(active);
+            var active = chapterService.isActive() ? false : true;
+            chapterService.setActive(active);
         };
     }]);
 
 
-    gitaApp.controller('chapterController', ['$scope', 'chapterService', 'toggleService', function ($scope, chapterService, toggleService) {
+    gitaApp.controller('chapterController', ['$scope', 'chapterService', function ($scope, chapterService) {
         var self = this;
         self.chapters = ['Dhyanam', 'Chapter 1', 'Chapter 2', 'Chapter 3', 'Chapter 4', 'Chapter 5', 'Chapter 6', 'Chapter 7',
             'Chapter 8', 'Chapter 9', 'Chapter 10', 'Chapter 11', 'Chapter 12', 'Chapter 13', 'Chapter 14', 'Chapter 15',
@@ -100,41 +121,32 @@
         };
 
         self.isActive = function () {
-            return toggleService.get();
+            return chapterService.isActive();
         };
 
         self.init();
 
     }]);
 
-    gitaApp.controller('slokaController', ['$scope', '$http', "chapterService", 'toggleService', function ($scope, $http, chapterService, toggleService) {
+    gitaApp.controller('slokaController', ['$scope', '$http', 'chapterService', function ($scope, $http, chapterService) {
         var self = this;
-        self.slokasArray = [9, 47, 72, 43, 42, 29, 47, 30, 28, 34, 42, 55, 20, 35, 27, 20, 24, 28, 78, 22];
-        self.sloka = 1;
         self.requestTypes = ['sanskrit', 'english', 'meaning'];
-        self.numSlokas = self.slokasArray[chapterService.getChapter()];
         self.sanskrit = "";
         self.english = "";
         self.meaning = "";
         $scope.navbarCollapsed = true;
-        self.getFormattedNumber = function (num) {
-            if (num < 10) {
-                return "0" + num;
-            }
-            return num;
-        };
 
-        //self.getURL = function (type) {
-        //    var chapName = "chap" + self.getFormattedNumber(chapterService.getChapter());
-        //    return chapName + "/" + type + "_" + self.getFormattedNumber(chapterService.getChapter()) + "_" + self.getFormattedNumber(self.sloka) + ".txt";
-        //};
 
         $scope.$on('chapterChanged', function (event, value) {
             chapterService.setChapter(value);
-            chapterService.setSloka (1);
-            self.numSlokas = self.slokasArray[value];
+            chapterService.setSloka(1);
             self.fetchData();
         });
+
+
+        self.getSloka = function () {
+            return chapterService.getSloka();
+        };
 
         self.fetchData = function () {
             for (index in self.requestTypes) {
@@ -167,7 +179,7 @@
         self.incrementSloka = function () {
             var currentSloka = chapterService.getSloka();
             var chapter = chapterService.getChapter();
-            if (++currentSloka <= self.numSlokas) {
+            if (++currentSloka <= chapterService.getNumberOfSlokas()) {
                 chapterService.setSloka(currentSloka);
             }
             else {
@@ -177,7 +189,6 @@
                     currentChapter = 0;
                 }
                 chapterService.setChapter(currentChapter);
-                self.numSlokas = self.slokasArray[currentChapter];
             }
             self.fetchData();
         };
@@ -195,8 +206,7 @@
                 }
 
                 chapterService.setChapter(currentChapter);
-                chapterService.setSloka(self.slokasArray[currentChapter]);
-                self.numSlokas = self.slokasArray[currentChapter];
+                chapterService.setSloka(chapterService.getNumberOfSlokas());
             }
             self.fetchData();
         };
@@ -207,12 +217,11 @@
 
         self.init = function () {
             chapterService.setSloka(1);
-            self.numSlokas = self.slokasArray[self.chapter];
             self.fetchData();
         };
 
         self.isActive = function () {
-            return toggleService.get();
+            return chapterService.isActive();
         };
 
         self.init();
