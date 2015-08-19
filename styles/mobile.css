@@ -8,6 +8,11 @@ body {
     margin-top: 5px;
 }
 
+.container {
+    margin-left: 5px;
+    margin-right: 5px;
+}
+
 #main {
     margin-left: 5px;
     margin-right: 5px;

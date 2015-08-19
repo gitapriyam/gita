@@ -69,7 +69,6 @@
 
         <div class="row">
             <div>
-                <!--<h1>Welcome to Gita abhyasa</h1>-->
                 <div class="panel-group" id="accordion8">
                     <div class="panel panel-default">
                         <div class="panel-heading">
@@ -98,7 +97,7 @@
             <div class="row-offcanvas" ng-controller="chapterController as chapterctrl">
                 <div ng-if="chapterctrl.isActive()" class="col-xs-2 sidebar-offcanvas" id="sidebar" role="navigation">
                     <ul class="nav" id="chapter-menu-collapse">
-                        <li ng-repeat='chapter in chapterctrl.chapters' ng-click="chapterctrl.chapterChanged(this.$index);"
+                        <li ng-repeat='chapter in chapterctrl.getChapters()' ng-click="chapterctrl.chapterChanged(this.$index);"
                             ng-class="{currentActive:chapterctrl.activeLink(this.$index), mouseOver:hover}"
                             ng-mouseover="hover=true" ng-mouseleave="hover=false">
                             {{chapter}}
@@ -115,12 +114,12 @@
 
                                         <td>
                                             <label>
-                                                <span class="label label-primary">Chapter: {{sloka.getChapter()}}</span>
+                                                <span class="label label-primary"> {{sloka.getChapterName()}}</span>
                                             </label>
                                         </td>
 
                                         <td>
-                                            <button ng-click="sloka.decrementSloka()" class="btn btn-default" aria-label="Center Align">
+                                            <button ng-click="sloka.decrementSloka()" class="btn btn-default btn-sm" aria-label="Center Align">
                                                 <span class="glyphicon glyphicon-chevron-left"></span>
                                             </button>
                                         </td>
@@ -132,7 +131,7 @@
                                         </td>
 
                                         <td>
-                                            <button ng-click="sloka.incrementSloka()" class="btn btn-default">
+                                            <button ng-click="sloka.incrementSloka()" class="btn btn-default btn-sm">
                                                 <span class="glyphicon glyphicon-chevron-right"></span>
                                             </button>
 
@@ -190,7 +189,30 @@
                                     </div>
                                     <div id="collapse4" class="panel-collapse collapse">
                                         <div class="panel-body">
-                                            Audio Section
+
+                                            <table>
+                                                <tr>
+                                                    <td>
+                                                        <button type="button" class="btn btn-default btn-sm">
+                                                            <span class="glyphicon glyphicon-play"></span> Play
+                                                        </button>
+                                                    </td>
+
+                                                    <td>
+                                                        <button type="button" class="btn btn-default btn-sm">
+                                                            <span class="glyphicon glyphicon-pause"></span> Pause
+                                                        </button>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td colspan="2">
+                                                        <audio id="slokaAudio" controls>
+                                                            <source>audio content cannot be played </source>
+                                                        </audio>
+                                                    </td>
+                                                </tr>
+
+                                            </table>
                                         </div>
                                     </div>
                                 </div>

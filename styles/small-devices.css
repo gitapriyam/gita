@@ -2,11 +2,25 @@ body {
     font-family: Verdana, sans-serif;
     color: #666666;
     letter-spacing: 0.8px;
-    font-size: 8px;
+    font-size: 7px;
     margin-left: 5px;
     margin-right: 5px;
     margin-top: 5px;
 }
+
+.navbar-brand{
+    font-size: 12px;
+}
+
+.panel-title{
+     font-size: 12px;
+}
+
+.container {
+    margin-left: 5px;
+    margin-right: 5px;
+}
+
 
 #main {
     margin-left: 5px;
