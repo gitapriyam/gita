@@ -10,6 +10,11 @@
     gitaApp.service('chapterService', function () {
         var self = this;
 
+        self.chapters = ['Dhyanam', 'Chapter 1', 'Chapter 2', 'Chapter 3', 'Chapter 4', 'Chapter 5', 'Chapter 6', 'Chapter 7',
+            'Chapter 8', 'Chapter 9', 'Chapter 10', 'Chapter 11', 'Chapter 12', 'Chapter 13', 'Chapter 14', 'Chapter 15',
+            'Chapter 16', 'Chapter 17', 'Chapter 18', 'Mahaatmym'];
+
+
         self.chapter = 0;
 
         self.sloka = 1;
@@ -62,26 +67,36 @@
 
             setActive: function (activeState) {
                 self.active = activeState;
-            }
-        }
-    });
-
-
-    gitaApp.service('toggleService', function () {
-
-        var self = this;
-
-        self.active = true;
-
-        return {
-            set: function (activeState) {
-                self.active = activeState;
             },
-            get: function () {
-                return self.active;
+
+            getChapters: function () {
+                return self.chapters;
+            },
+
+            getChapterName: function () {
+                return self.chapters[self.chapter];
+            },
+
+            getSlokaAudioURL: function () {
+                var chapName = "chap" + self.getFormattedNumber(self.chapter);
+                return chapName + "/" + self.getFormattedNumber(self.chapter) + "-" + self.getFormattedNumber(self.sloka) + ".mp3";
+            },
+
+            getChapterAudioURL: function () {
+                var chapName = "chap" + self.getFormattedNumber(self.chapter);
+                var mp3Audio = chapName;
+                if (self.chapter == 0) {
+                    mp3Audio = "dhyanam";
+                }
+                else if (self.chapter == 19) {
+                    mp3Audio = "mahatmyam";
+                }
+
+                return chapName + "/" + mp3Audio + ".mp3";
             }
         }
     });
+
 
     gitaApp.controller("toggleController", ['$scope', 'chapterService', function ($scope, chapterService) {
 
@@ -99,9 +114,6 @@
 
     gitaApp.controller('chapterController', ['$scope', 'chapterService', function ($scope, chapterService) {
         var self = this;
-        self.chapters = ['Dhyanam', 'Chapter 1', 'Chapter 2', 'Chapter 3', 'Chapter 4', 'Chapter 5', 'Chapter 6', 'Chapter 7',
-            'Chapter 8', 'Chapter 9', 'Chapter 10', 'Chapter 11', 'Chapter 12', 'Chapter 13', 'Chapter 14', 'Chapter 15',
-            'Chapter 16', 'Chapter 17', 'Chapter 18', 'Mahaatmym'];
 
         self.chapterChanged = function (chapter) {
             chapterService.setChapter(chapter);
@@ -110,6 +122,10 @@
 
         self.getChapter = function () {
             return chapterService.getChapter();
+        }
+
+        self.getChapters = function () {
+            return chapterService.getChapters();
         }
 
         self.activeLink = function (index) {
@@ -138,10 +154,14 @@
 
 
         $scope.$on('chapterChanged', function (event, value) {
-            chapterService.setChapter(value);
+            //chapterService.setChapter(value);
             chapterService.setSloka(1);
             self.fetchData();
         });
+
+        self.getChapters = function () {
+            return chapterService.getChapters();
+        };
 
 
         self.getSloka = function () {
@@ -215,6 +235,10 @@
             return chapterService.getChapter();
         };
 
+        self.getChapterName = function () {
+            return chapterService.getChapterName();
+        };
+
         self.init = function () {
             chapterService.setSloka(1);
             self.fetchData();
@@ -223,6 +247,14 @@
         self.isActive = function () {
             return chapterService.isActive();
         };
+
+        self.getSlokaAudioURL = function () {
+            return chapterService.getSlokaAudioURL();
+        }
+
+        self.getChapterAudioURL = function () {
+            chapterService.getChapterAudioURL();
+        }
 
         self.init();
     }]);
