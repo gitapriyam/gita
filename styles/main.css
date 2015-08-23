@@ -20,6 +20,11 @@ h2 {
     background-color: blue;
 }
 
+.container {
+    margin-left: 5px;
+    margin-right: 5px;
+}
+
 .mouseOver {
     color: white;
     background-color: green;
@@ -31,6 +36,12 @@ h2 {
     padding-right: 3px;
     padding-bottom: 3px;
     padding-top: 3px;
+}
+
+#sidebar {
+    height: 100%;
+    padding-right: 0;
+    padding-left: 0;
 }
 
 .panel-heading {

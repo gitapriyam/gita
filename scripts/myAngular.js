@@ -1,5 +1,5 @@
 (function () {
-    var gitaApp = angular.module("gitaApp", ["ngResource"])
+    var gitaApp = angular.module("gitaApp", ['ngResource', 'ngCookies'])
 
     gitaApp.filter("sanitize", ['$sce', function ($sce) {
         return function (htmlCode) {
@@ -112,7 +112,7 @@
     }]);
 
 
-    gitaApp.controller('chapterController', ['$scope', 'chapterService', function ($scope, chapterService) {
+    gitaApp.controller('chapterController', ['$scope', '$cookies', 'chapterService', function ($scope, $cookies, chapterService) {
         var self = this;
 
         self.chapterChanged = function (chapter) {
@@ -133,7 +133,17 @@
         };
 
         self.init = function () {
-            self.chapterChanged(0);
+            var chapter = parseInt($cookies.get("chapter"));
+            if (!chapter) {
+                chapter = 0;
+            };
+            chapterService.setChapter(chapter);
+            self.chapterChanged(chapter);
+
+        };
+
+        self.setActive = function () {
+            chapterService.setActive(false);
         };
 
         self.isActive = function () {
@@ -144,7 +154,7 @@
 
     }]);
 
-    gitaApp.controller('slokaController', ['$scope', '$http', 'chapterService', function ($scope, $http, chapterService) {
+    gitaApp.controller('slokaController', ['$scope', '$http', '$cookies', 'chapterService', function ($scope, $http, $cookies, chapterService) {
         var self = this;
         self.requestTypes = ['sanskrit', 'english', 'meaning'];
         self.sanskrit = "";
@@ -154,8 +164,9 @@
 
 
         $scope.$on('chapterChanged', function (event, value) {
-            //chapterService.setChapter(value);
             chapterService.setSloka(1);
+            self.addCookie("chapter", value);
+            self.addCookie("sloka", 1);
             self.fetchData();
         });
 
@@ -196,38 +207,54 @@
             }
         };
 
+
+        self.addCookie = function (name, value) {
+            var expireDate = new Date();
+            expireDate.setDate(expireDate.getDate() + 90);
+            $cookies.put(name, value, { 'expires': expireDate });
+        }
+
         self.incrementSloka = function () {
             var currentSloka = chapterService.getSloka();
             var chapter = chapterService.getChapter();
+            var currentChapter = chapter;
             if (++currentSloka <= chapterService.getNumberOfSlokas()) {
                 chapterService.setSloka(currentSloka);
             }
             else {
-                chapterService.setSloka(1);
-                var currentChapter = ++chapter;
+                currentSloka = 1;
+                chapterService.setSloka(currentSloka);
+                currentChapter = ++chapter;
                 if (currentChapter > 19) {
                     currentChapter = 0;
                 }
                 chapterService.setChapter(currentChapter);
+
             }
+            self.addCookie("chapter", currentChapter);
+            self.addCookie("sloka", currentSloka);
             self.fetchData();
         };
 
         self.decrementSloka = function () {
             var currentSloka = chapterService.getSloka();
             var chapter = chapterService.getChapter();
+            var currentChapter = chapter;
             if (--currentSloka > 0) {
                 chapterService.setSloka(currentSloka);
             }
             else {
-                var currentChapter = --chapter;
+                currentChapter = --chapter;
                 if (currentChapter < 0) {
                     currentChapter = 19;
                 }
 
                 chapterService.setChapter(currentChapter);
-                chapterService.setSloka(chapterService.getNumberOfSlokas());
+                currentSloka = chapterService.getNumberOfSlokas();
+                chapterService.setSloka(currentSloka);
             }
+            self.addCookie("chapter", currentChapter);
+            self.addCookie("sloka", currentSloka);
             self.fetchData();
         };
 
@@ -240,7 +267,12 @@
         };
 
         self.init = function () {
-            chapterService.setSloka(1);
+            var sloka = parseInt($cookies.get("sloka"));
+            if (!sloka) {
+                sloka = 1;
+            };
+            chapterService.setSloka(sloka);
+
             self.fetchData();
         };
 
@@ -253,7 +285,7 @@
         }
 
         self.getChapterAudioURL = function () {
-            chapterService.getChapterAudioURL();
+            return chapterService.getChapterAudioURL();
         }
 
         self.init();

@@ -1,5 +1,15 @@
 ﻿var startTimer;
 
+function setSidebarActive() {
+    if (window.innerWidth > 767) {
+        var div = $("#navBarHeader");
+        var toggleController = angular.element(div).controller();
+        if (!toggleController.isActive()) {
+            $("#toggleButton")[0].click();
+        }
+    }
+}
+
 function getAudioPlayer() {
     return $("#slokaAudio")[0];
 }

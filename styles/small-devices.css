@@ -8,12 +8,25 @@ body {
     margin-top: 5px;
 }
 
-.navbar-brand{
+.row-offcanvas {
+    position: relative;
+    -webkit-transition: all 0.25s ease-out;
+    -moz-transition: all 0.25s ease-out;
+    transition: all 0.25s ease-out;
+}
+
+#sidebar {
+    height: 100%;
+    padding-right: 0;
+    padding-left: 0;
+}
+
+.navbar-brand {
     font-size: 12px;
 }
 
-.panel-title{
-     font-size: 12px;
+.panel-title {
+    font-size: 12px;
 }
 
 .container {
@@ -71,10 +84,10 @@ body {
 
 .panel-heading {
     padding-left: 5px;
-    padding-right: 5px; 
+    padding-right: 5px;
 }
 
 .panel-body {
     padding-left: 5px;
-    padding-right: 5px; 
+    padding-right: 5px;
 }

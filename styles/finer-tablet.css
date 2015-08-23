@@ -51,6 +51,12 @@ body {
     padding-top: 3px;
 }
 
+#sidebar {
+    height: 100%;
+    padding-right: 0;
+    padding-left: 0;
+}
+
 #slokaList {
     padding-left: 5px;
     padding-right: 0px;

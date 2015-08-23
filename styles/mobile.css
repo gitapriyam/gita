@@ -8,6 +8,19 @@ body {
     margin-top: 5px;
 }
 
+.row-offcanvas {
+    position: relative;
+    -webkit-transition: all 0.25s ease-out;
+    -moz-transition: all 0.25s ease-out;
+    transition: all 0.25s ease-out;
+}
+
+#sidebar {
+    height: 100%;
+    padding-right: 0;
+    padding-left: 0;
+}
+
 .container {
     margin-left: 5px;
     margin-right: 5px;
