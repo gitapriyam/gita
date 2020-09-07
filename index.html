@@ -1,21 +1,97 @@
 <html>
     <head>
-        <title>Welcome to Gita Abhyasa</title>
+    <title>Welcome to Gita Abhyasa</title>
+    <meta name="description" content="">
+
+    <!-- Mobile viewport optimized -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><!--, maximum-scale=1.0, user-scalable=no">-->
+
+    <link rel="stylesheet" href="styles/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" media="screen and (min-device-width: 320px) and (max-device-width: 479px)" href="styles/small-devices.css">
+    <link rel="stylesheet" type="text/css" media="screen and (min-device-width: 480px) and (max-device-width: 767px)" href="styles/mobile.css">
+    <link rel="stylesheet" type="text/css" media="screen and (min-device-width: 768px) and (max-device-width: 991px)" href="styles/tablet.css">
+    <link rel="stylesheet" type="text/css" media="screen and (min-device-width: 992px) and (max-device-width: 1199px)" href="styles/finer-tablet.css">
+    <link rel="stylesheet" type="text/css" media="screen and (min-device-width: 1200px)" href="styles/main.css">
     </head>
     <body>
-        <h2> We have the following resources available</h2>
-        <table>
-            <thead>
-                <tr>
-                    <td>Resource</td>
-                    <td>Path</td>
-                </tr>
-            </thead>
-            <tr>
-                <td>Bhagavad Gita</td>
-                <td><a href="./gita/">Gita</a></td>
-            </tr>
-        </table>
+        <div class="container-fluid" id="main">
+            <div class="row">
+                <div class="navbar navbar-default" role="navigation">
+                    <div class="container">
+                        <div id="navBarHeader" class="navbar-header" ng-controller="toggleController as ctrl">
+                            <button id="toggleButton" type="button" class="navbar-toggle" data-toggle="offcanvas"
+                                    data-target=".sidebar-nav" ng-click="ctrl.toggleActive();">
+                                <span class="icon-bar"></span>
+                                <span class="icon-bar"></span>
+                                <span class="icon-bar"></span>
+                            </button>
+                            <a class="navbar-brand" href="#">Welcome to Gita abhyasa</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        <div class="row">
+            <div>
+                <div class="panel-group" id="accordion8">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">
+                                <a data-toggle="collapse" data-parent="#accordion10" href="#intro">
+                                    Brief Description
+                                </a>
+                            </h4>
+                        </div>
+                        <div id="intro" class="panel-collapse collapse in">
+                            <div id="sanskrit" class="panel-body">
+                                <p>
+                                    This website provides a collection of slokas & chanting of those slokas. 
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4 class="panel-title">
+                    <a data-toggle="collapse" data-parent="#accordion1" href="#collapse1">
+                       Resources
+                    </a>
+                </h4>
+            </div>
+            <div class="panel-collapse collapse in">
+                <div class="panel-body">
+                    <table class="table table-hover">
+                        <thead>
+                          <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Name</th>
+                            <th scope="col">Resource</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr>
+                            <th scope="row">1</th>
+                            <td>Bhagavad Gita</td>
+                            <td><a href="gita/">Navigate</a></td>
+                          </tr>
+                          <tr>
+                            <th scope="row">2</th>
+                            <td>Vishnu Sahasranamam</td>
+                            <td><a href="visnu/">Navigate</a></td>
+                          </tr>
+                          <tr>
+                            <th scope="row">3</th>
+                            <td>Narayaneeyam</td>
+                            <td><a href="narayana/">Navigate</a></td>
+                          </tr>
+                        </tbody>
+                      </table> 
+                </div>
+        </div>
+    </div>
     </body>
 
 </html>
