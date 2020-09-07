@@ -9,11 +9,11 @@
 
     gitaApp.service('chapterService', function () {
         var self = this;
+        self.resourceUrl = "https://gitastorage.blob.core.windows.net/gitaresources";
 
         self.chapters = ['Dhyanam', 'Chapter 1', 'Chapter 2', 'Chapter 3', 'Chapter 4', 'Chapter 5', 'Chapter 6', 'Chapter 7',
             'Chapter 8', 'Chapter 9', 'Chapter 10', 'Chapter 11', 'Chapter 12', 'Chapter 13', 'Chapter 14', 'Chapter 15',
             'Chapter 16', 'Chapter 17', 'Chapter 18', 'Mahaatmym'];
-
 
         self.chapter = 0;
 
@@ -35,6 +35,9 @@
         };
 
         return {
+            getResourceUrl(){
+                return self.resourceUrl;
+            },
             setChapter: function (chap) {
                 self.resetSloka();
                 self.chapter = chap;
@@ -56,7 +59,7 @@
             },
 
             getURL: function (type) {
-                var chapName = "chap" + self.getFormattedNumber(self.chapter);
+                var chapName = self.resourceUrl + "/chap" + self.getFormattedNumber(self.chapter);
                 return chapName + "/" + type + "_" + self.getFormattedNumber(self.chapter) +
                     "_" + self.getFormattedNumber(self.sloka) + ".txt";
             },
@@ -78,12 +81,12 @@
             },
 
             getSlokaAudioURL: function () {
-                var chapName = "chap" + self.getFormattedNumber(self.chapter);
+                var chapName = self.resourceUrl + "/chap" + self.getFormattedNumber(self.chapter);
                 return chapName + "/" + self.getFormattedNumber(self.chapter) + "-" + self.getFormattedNumber(self.sloka) + ".mp3";
             },
 
             getChapterAudioURL: function () {
-                var chapName = "chap" + self.getFormattedNumber(self.chapter);
+                var chapName = self.resourceUrl + "/chap" + self.getFormattedNumber(self.chapter);
                 var mp3Audio = chapName;
                 if (self.chapter == 0) {
                     mp3Audio = "dhyanam";
